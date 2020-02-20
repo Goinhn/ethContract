@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>智能合同/现有合同</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="../public/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="../public/css/orionicons.css">
+
+  <link rel="stylesheet" href="../public/css/style.default.css" id="theme-stylesheet">
+
+</head>
+
+<body>
+
+  <header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+      <ul class="mr-auto d-flex align-items-center list-unstyled mb-0">
+        <li class="nav-item mr-auto">
+          <div class="text">
+            <span><h6>账户地址：</h6></span>
+            <span><h6 class="text" id="accountAddress">84833488888888888888888888888888888888888888</h6></span>
+          </div>
+        </li>
+      </ul>
+      <a href="#" class="navbar-brand font-weight-bold text-uppercase text-base">
+        <h3>智能合同</h3>
+      </a>
+      <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+        <li class="nav-item dropdown ml-auto">
+          <a id="userInfo" herf="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">
+            <img src="../public/img/avatar-6.jpg" alt="Jason Doe" style="max-width: 2.5rem;"
+                 class="img-fluid rounded-circle shadow">
+          </a>
+
+          <div aria-labelledby="userInfo" class="dropdown-menu">
+            <a href="#" class="dropdown-item">
+              <strong class="d-block text-uppercase headings-font-family">GOINHN</strong>
+              <small>个人账号</small>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="personalData.html" class="dropdown-item">个人数据</a>
+            <div class="dropdown-divider"></div>
+            <a href="login.html" class="dropdown-item">退出登录</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <div class="d-flex align-items-stretch">
+
+    <div id="sidebar" class="sidebar py-3">
+      <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">合同</div>
+      <ul class="sidebar-menu list-unstyled">
+
+        <li class="sidebar-list-item">
+          <a href="index.html" class="sidebar-link text-muted active">
+            <i class="o-paperwork-1 mr-3 text-gray"></i>
+            <span>现有合同</span>
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="newContract.html" class="sidebar-link text-muted">
+            <i class="o-database-1 mr-3 text-gray"></i>
+            <span>新增合同</span>
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="signature.html" class="sidebar-link text-muted">
+            <i class="o-table-content-1 mr-3 text-gray"></i>
+            <span>绑定签名</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">账户</div>
+      <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item">
+          <a href="personalData.html" class="sidebar-link text-muted">
+            <i class="o-sales-up-1 mr-3 text-gray"></i>
+            <span>个人数据</span>
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="login.html" class="sidebar-link text-muted">
+            <i class="o-exit-1 mr-3 text-gray"></i>
+            <span>登录</span>
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="register.html" target="_blank" class="sidebar-link text-muted">
+            <i class="o-imac-screen-1 mr-3 text-gray"></i>
+            <span>注册</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+
+
+    <div class="page-holder w-100 d-flex flex-wrap">
+
+      <div class="container-fluid px-xl-5">
+        <section class="py-5">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 mb-4 mb-xl-0">
+              <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                <div class="flex-grow-1 d-flex align-items-center">
+                  <div class="dot mr-3 bg-green"></div>
+                  <div class="text">
+                    <h6 class="mb-0">已生效合同</h6>
+                    <span class="text-gray">100</span>
+                  </div>
+                </div>
+                <div class="icon text-white bg-green">
+                  <i class="far fa-clipboard"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 mb-4 mb-xl-0">
+              <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                <div class="flex-grow-1 d-flex align-items-center">
+                  <div class="dot mr-3 bg-blue"></div>
+                  <div class="text">
+                    <h6 class="mb-0">未签署合同</h6>
+                    <span class="text-gray">100</span>
+                  </div>
+                </div>
+                <div class="icon text-white bg-blue">
+                  <i class="fa fa-dolly-flatbed"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </section>
+
+        <section>
+          <div class="row">
+            <div class="col-lg-12 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="text-uppercase mb-0">已生效合同</h6>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped card-text">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>合同名称</th>
+                        <th>合同hash</th>
+                        <th>甲方</th>
+                        <th>乙方</th>
+                        <th>查看</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="text-uppercase mb-0">未签署合同</h6>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped card-text">
+                    <thead>
+                      <tr>
+                      <tr>
+                        <th>#</th>
+                        <th>合同名称</th>
+                        <th>合同hash</th>
+                        <th>甲方</th>
+                        <th>乙方</th>
+                        <th>查看</th>
+                      </tr>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><a href="#">查看</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+
+      <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-left text-primary">
+              <p class="mb-2 mb-md-0"></p>
+            </div>
+            <div class="col-md-6 text-center text-md-right text-gray-400">
+              <p class="mb-0">Copyright &copy;Goinhn</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../dist/indexDist.js"></script>
+  
+</body>
+
+</html>
