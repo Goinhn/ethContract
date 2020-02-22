@@ -10,11 +10,11 @@
 
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
  
-    <link rel="stylesheet" href="../public/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/vendor/bootstrap/css/bootstrap.min.css"/>
    
-    <link rel="stylesheet" href="../public/css/orionicons.css">
+    <link rel="stylesheet" href="../public/css/orionicons.css"/>
 
-    <link rel="stylesheet" href="../public/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="../public/css/style.default.css" id="theme-stylesheet"/>
  
   </head>
   <body>
@@ -30,20 +30,22 @@
             <h2 class="text-primary text-uppercase mb-4">智能合同</h2>
             <p class="text-muted">基于以太坊网络</p>
 
-            <form id="loginForm" action="user/login" class="mt-4">
+            <form id="loginForm" class="mt-4">
               <div class="form-group mb-4">
                 <input type="text" id="nameMail" name="nameMail" placeholder="账户名/邮箱" class="form-control border-0 shadow form-control-lg">
               </div>
               <div class="form-group mb-4">
                 <input type="password" id="password" name="password" placeholder="密码" class="form-control border-0 shadow form-control-lg text-violet">
               </div>
+
               <div class="form-group mb-4">
                 <div class="custom-control custom-checkbox">
                   <input id="customCheck1" type="checkbox" name="remember" checked class="custom-control-input">
                   <label for="customCheck1" class="custom-control-label">记住我</label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary shadow px-5">登录</button>
+
+              <button id="loginButton" class="btn btn-primary shadow px-5">登录</button>
             </form>
 
           </div>
@@ -52,12 +54,8 @@
       </div>
     </div>
 
+    <script src="../dist/loginDist.js"></script>
 
 
-    <script src="../public/vendor/jquery/jquery.min.js"></script>
-    <script src="../public/vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="../public/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../public/vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="../public/vendor/chart.js/Chart.min.js"></script>
   </body>
 </html>
