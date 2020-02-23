@@ -10,14 +10,12 @@ public class Contract implements Serializable {
     private String contractType;
     private String contractAddress;
     private String partyA;
-    private String publicKeyA;
     private String partyB;
-    private String publicKeyB;
 
     public Contract() {
     }
 
-    public Contract(int contractId, int userId, String contractHash, String contractName, String contractType, String contractAddress, String partyA, String publicKeyA, String partyB, String publicKeyB) {
+    public Contract(int contractId, int userId, String contractHash, String contractName, String contractType, String contractAddress, String partyA, String partyB) {
         this.contractId = contractId;
         this.userId = userId;
         this.contractHash = contractHash;
@@ -25,9 +23,7 @@ public class Contract implements Serializable {
         this.contractType = contractType;
         this.contractAddress = contractAddress;
         this.partyA = partyA;
-        this.publicKeyA = publicKeyA;
         this.partyB = partyB;
-        this.publicKeyB = publicKeyB;
     }
 
     public int getContractId() {
@@ -86,28 +82,12 @@ public class Contract implements Serializable {
         this.partyA = partyA;
     }
 
-    public String getPublicKeyA() {
-        return publicKeyA;
-    }
-
-    public void setPublicKeyA(String publicKeyA) {
-        this.publicKeyA = publicKeyA;
-    }
-
     public String getPartyB() {
         return partyB;
     }
 
     public void setPartyB(String partyB) {
         this.partyB = partyB;
-    }
-
-    public String getPublicKeyB() {
-        return publicKeyB;
-    }
-
-    public void setPublicKeyB(String publicKeyB) {
-        this.publicKeyB = publicKeyB;
     }
 
     @Override
@@ -120,9 +100,7 @@ public class Contract implements Serializable {
                 ", contractType='" + contractType + '\'' +
                 ", contractAddress='" + contractAddress + '\'' +
                 ", partyA='" + partyA + '\'' +
-                ", publicKeyA='" + publicKeyA + '\'' +
                 ", partyB='" + partyB + '\'' +
-                ", publicKeyB='" + publicKeyB + '\'' +
                 '}';
     }
 }

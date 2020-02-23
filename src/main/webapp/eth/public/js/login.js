@@ -1,51 +1,104 @@
-import '../../app';
-
-function checkNameMail() {
-    let nameMail = $("#nameMail").val();
-    let reg = /^.{4,30}$/;
-    let flag = reg.test(nameMail);
-    if (flag) {
-        $("#nameMail").css("border", "");
-    } else {
-        alert('error');
-        $("#nameMail").css("border", "1px solid red");
-    }
-    return flag;
-}
-
-function checkPassword() {
-    let password = $("#password").val();
-    let reg = /^\w{4,20}$/;
-    let flag = reg.test(password);
-    if (flag) {
-        $("#password").css("border", "");
-    } else {
-        alert('error');
-        $("#password").css("border", "1px solid red");
-    }
-    return flag;
-}
+import $ from 'jquery';
+import '../vendor/bootstrap/js/bootstrap.min';
+import '../vendor/formValidator/js/formValidation.min';
+import '../vendor/formValidator/js/bootstrap';
+import '../vendor/formValidator/js/zh_CN';
+import '../vendor/jquery.cookie/jquery.cookie'
 
 $(function () {
-    $("#loginButton").on({
-        click: () => {
-            if (checkNameMail() && checkPassword()) {
-                $.post("user/login", $("#loginForm").serialize(), function (data) {
-                    if (data.flag) {
-                        console.log(data);
-                    } else {
-                        alert(data["errorMsg"]);
+    loginCheck();
+});
+
+function loginCheck() {
+    $("#loginForm").formValidation({
+        message: "值输入错误",
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            nameMail: {
+                selector: "#nameMail",
+                verbose: false,
+                validators: {
+                    notEmpty: {
+                        message: "用户名/邮箱不能为空"
                     }
-                });
+                }
+            },
+            password: {
+                selector: "#password",
+                validators: {
+                    notEmpty: {
+                        message: "密码不能为空"
+                    }
+                }
             }
-            return false;
+        },
+        onSuccess: function () {
+            $("#loginButton").on({
+                click: function () {
+                    $.ajax({
+                        url: "user/login",
+                        type: "post",
+                        data: {
+                            "function": "login",
+                            "nameMail": $("#nameMail").val(),
+                            "password": $("#password").val(),
+                            "remember": $("#remember").val()
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.flag == true) {
+                                let userId = data.data.userId;
+                                if ($("#remember") == "on") {
+                                    $.cookie("userId", userId, {expires: 7, path: '/'});
+                                }
+                                let url = "index.html?userId=" + userId;
+                                window.location.href = url;
+
+                            } else {
+                                alert(data.errorMsg);
+                            }
+                            $("#loginForm").data('formValidation').resetForm();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.status == "undefined") {
+                                return;
+                            }
+                            switch (jqXHR.status) {
+                                case 400:
+                                    alert("400：错误的语法请求");
+                                    break;
+                                case 401:
+                                    alert("401：需要进行身份验证");
+                                    break;
+                                case 403:
+                                    alert("系统拒绝：您没有访问权限。");
+                                    break;
+                                case 404:
+                                    alert("您访问的资源不存在。");
+                                    window.location.href = "404.html";
+                                    break;
+                                case 406:
+                                    alert("方法禁用");
+                                    break;
+                                case 500:
+                                    alert("服务器内部错误");
+                                    break;
+                                case 503:
+                                    alert("服务不可用");
+                                    break;
+                                case 504:
+                                    alert("网关超时");
+                                    break;
+                            }
+                        }
+                    })
+                }
+            });
         }
     });
+}
 
-    $("#nameMail").on({
-        blur: checkNameMail
-    });
-    $("#password").on({
-        blur: checkPassword
-    });
-});

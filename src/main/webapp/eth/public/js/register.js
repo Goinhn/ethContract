@@ -5,10 +5,10 @@ import '../vendor/formValidator/js/bootstrap';
 import '../vendor/formValidator/js/zh_CN';
 
 $(function () {
-    checkNow();
+    registerCheck();
 });
 
-function checkNow() {
+function registerCheck() {
     function randomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -67,7 +67,7 @@ function checkNow() {
                                 return true;
                             }
 
-                            if (value.length < 4) {
+                            if (value.length < 8) {
                                 return {
                                     valid: false,
                                     message: "密码长度不能小于8位"
@@ -139,26 +139,60 @@ function checkNow() {
                 }
             }
         },
-        onSuccess:function(){
+        onSuccess: function () {
             $("#registerButton").on({
-                click: function(){
-                    $.post(
-                        "user/register",
-                        {
+                click: function () {
+                    $.ajax({
+                        url: "user/register",
+                        type: "post",
+                        data: {
                             "function": "register",
                             "username": $("#username").val(),
                             "mail": $("#mail").val(),
                             "password": $("#password").val()
                         },
-                        function(data){
-                            if(data.flag){
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.flag == true) {
                                 alert("注册成功，请通过邮箱激活账号！");
-                                $("#registerForm").data('formValidation').resetForm();
-                            }else{
+                            } else {
                                 alert(data.errorMsg);
                             }
+                            $("#registerForm").data('formValidation').resetForm();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.status == "undefined") {
+                                return;
+                            }
+                            switch (jqXHR.status) {
+                                case 400:
+                                    alert("400：错误的语法请求");
+                                    break;
+                                case 401:
+                                    alert("401：需要进行身份验证");
+                                    break;
+                                case 403:
+                                    alert("系统拒绝：您没有访问权限。");
+                                    break;
+                                case 404:
+                                    alert("您访问的资源不存在。");
+                                    window.location.href = "404.html";
+                                    break;
+                                case 406:
+                                    alert("方法禁用");
+                                    break;
+                                case 500:
+                                    alert("服务器内部错误");
+                                    break;
+                                case 503:
+                                    alert("服务不可用");
+                                    break;
+                                case 504:
+                                    alert("网关超时");
+                                    break;
+                            }
                         }
-                    );
+                    })
                 }
             });
         }

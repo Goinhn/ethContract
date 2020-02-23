@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setIsActive("n");
         userDao.saveUser(user);
 
-        String content="<a href='http://localhost/eth/user/activeNumber?code="+user.getActiveNumber()+"'>点击激活【智能合同】</a>";
+        String content="<a href='http://localhost/eth/user/active.html?code="+user.getActiveNumber()+"'>点击激活【智能合同】</a>";
         MailUtil.sendMail(user.getMail(),content,"智能合同激活邮件");
 
         return "";
@@ -49,15 +49,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(User user) {
         User userBack = userDao.findByUsernameAndPassword(user);
-        if(userBack != null){
-            User userTemp = userDao.findByUserId(userBack.getUserId());
-            if(userTemp != null && userTemp.getIsActive().equals("y")){
+        if(userBack != null && userBack.getIsActive().equalsIgnoreCase("y")){
+            return userBack;
+        }else{
+            userBack = userDao.findByMailAndPassword(user);
+            if(userBack != null && userBack.getIsActive().equalsIgnoreCase("y")){
                 return userBack;
-            } else {
+            }else{
                 return null;
             }
-        }else{
-            return null;
         }
     }
 }

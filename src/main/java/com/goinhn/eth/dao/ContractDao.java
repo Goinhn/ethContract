@@ -20,9 +20,7 @@ public interface ContractDao {
                     @Result(column = "contractType", property = "contractType"),
                     @Result(column = "contractAddress", property = "contractAddress"),
                     @Result(column = "partyA", property = "partyA"),
-                    @Result(column = "publicKeyA", property = "publicKeyA"),
                     @Result(column = "partyB", property = "partyB"),
-                    @Result(column = "publicKeyB", property = "publicKeyB")
             })
     List<Contract> findAll();
 
@@ -38,11 +36,11 @@ public interface ContractDao {
 
 
     @Select("select count(*) from tab_contract where userId = #{userId} and contractType = #{contractType}")
-    int findCountByUserIdAndContractType(Map map);
+    int findCountByUserIdAndContractType(Contract contract);
 
     @Select("select * from tab_contract where userId = #{userId} and contractType = #{contractType} limit #{begin}, #{pageNumber}")
     @ResultMap("contractMap")
-    List<Contract> findByUserIdAndContractType(Map map);
+    List<Contract> findByUserIdAndContractType(Contract contract);
 
 
     @Select("select * from tab_contract where contractHash = #{contractHash}")
@@ -60,13 +58,19 @@ public interface ContractDao {
     Contract findByContractAddress(String contractAddress);
 
 
-    @Insert("insert into tab_contract (userId, contractHash, contractName, contractType, contractAddress, partyA, publicKeyA, partyB, publicKeyB)" +
-            "values(#{userId}, #contractHash}, #{contractName}, #{contractType}, #{contractAddress}, #{partyA}, #{publicKeyA}, #{partyB}, #{publicKeyB})")
+    @Insert("insert into tab_contract (userId, contractHash, contractName, contractType, contractAddress, partyA, partyB)" +
+            "values(#{userId}, #contractHash}, #{contractName}, #{contractType}, #{contractAddress}, #{partyA}, #{partyB}")
     @SelectKey(keyColumn = "contractId", keyProperty = "contractId", resultType = Integer.class, before = false, statement = {"select last_insert_id()"})
-    int saveContract(Contract contract);
+    int saveForceContract(Contract contract);
 
 
-    @Update("update tab_contract set contract = #{contract}, contractAddress = #{contractAddress}, partyA = #{partyA}, publicKeyA = {publicKeyA}, partyB = #{partyB}, publicKeyB = #{publicKeyB}")
+    @Insert("insert into tab_contract (userId, contractHash, contractName, contractType)" +
+            "values(#{userId}, #contractHash}, #{contractName}, #{contractType}")
+    @SelectKey(keyColumn = "contractId", keyProperty = "contractId", resultType = Integer.class, before = false, statement = {"select last_insert_id()"})
+    int saveNoSignedContract(Contract contract);
+
+
+    @Update("update tab_contract set contractType = #{contractType}, contractAddress = #{contractAddress}, partyA = #{partyA}, partyB = #{partyB}")
     int updateContract(Contract contract);
 
 

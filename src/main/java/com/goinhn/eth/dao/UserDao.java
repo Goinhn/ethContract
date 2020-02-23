@@ -45,6 +45,11 @@ public interface UserDao {
     User findByUsernameAndPassword(User user);
 
 
+    @Select("select 8 from tab_user where mail = #{mail} and password = #{password}")
+    @ResultMap("userMap")
+    User findByMailAndPassword(User user);
+
+
     @Select("select * from tab_user where accountAddress = #{accountAddress}")
     @ResultMap("userMap")
     User findByAccountAddress(String accountAddress);
