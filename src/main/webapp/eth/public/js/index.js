@@ -56,32 +56,102 @@ const testData = [
 ];
 
 
+const accountAddress = '0x0c54FcCd2e384b4BB6f2E405Bf5Cbc15a017AaFb';
+const value = '0xde0b6b3a7640000';
+const desiredNetwork = '1';
+
+
 $(function () {
+    userInfo();
     checkEth();
-    // userInfo();
     // contractCount();
-    // forceDetails();
-    // notSignedDetails();
+    forceDetails();
+    notSignedDetails();
+    loginOut();
 });
 
 
 function checkEth() {
     window.addEventListener('load', function () {
-        if (window.ethereum) {
-            window.web3 = new Web3(window.ethereum);
-            try {
-                window.ethereum.enable();
-            } catch (error) {
-                console.log(error);
-            }
-            console.log(web3.eth.accounts[0]);
-            let address = web3.eth.accounts[0];
-            $("#accountAddress").html(address);
-        } else if (window.web3) {
-            window.web3 = new Web3(web3.currentProvider);
-            // let address = getUserAccount();
+        // if (window.ethereum) {
+        //     window.web3 = new Web3(window.ethereum);
+        //     try {
+        //         ethereum.enable();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        //     console.log(web3.eth.accounts);
+        //     let address = web3.eth.accounts[0];
+        //     $("#accountAddress").html(address);
+        // } else if (window.web3) {
+        //     window.web3 = new Web3(web3.currentProvider);
+        //     // let address = getUserAccount();
+        // } else {
+        //     alert('请首先安装metamask');
+        // }
+
+
+        if (typeof window.ethereum === 'undefined') {
+            alert('请首先安装metamask')
         } else {
-            alert('请首先安装metamask');
+            ethereum.enable()
+                .catch(function (reason) {
+                    if (reason === 'User rejected provider access') {
+                    } else {
+                        alert('当前钱包账户未登录');
+                    }
+                })
+                .then(function (accounts) {
+                    // if (ethereum.networkVersion !== desiredNetwork) {
+                    //     alert('This application requires the main network, please switch it in your MetaMask UI.')
+                    // }
+                    console.log(accounts);
+                    let account = accounts[0];
+                    console.log(account);
+                    $("#accountAddress").html(account);
+
+                    $.ajax({
+                        url: "index/userSaveAccountAddress",
+                        type: "post",
+                        data: {
+                            "function": "userSaveAccountAddress",
+                            "accountAddress": account
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.flag == true) {
+                            } else {
+                                alert(data.errorMsg);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.status == "undefined") {
+                                return;
+                            }
+                            switch (jqXHR.status) {
+                                case 403:
+                                    alert("系统拒绝：您没有访问权限。");
+                                    break;
+                                case 404:
+                                    alert("您访问的资源不存在。");
+                                    // window.location.href = "404.html";
+                                    break;
+                                case 500:
+                                    alert("服务器内部错误");
+                                    break;
+                                case 503:
+                                    alert("服务不可用");
+                                    break;
+                            }
+                        }
+                    });
+                });
+
+            ethereum.on('accountsChanged', function (accounts) {
+                console.log(accounts[0])
+            });
+            console.log(ethereum.networkVersion);
+            console.log(ethereum.selectedAddress);
         }
     });
 }
@@ -96,6 +166,7 @@ function userInfo() {
         dataType: "json",
         success: function (data) {
             if (data.flag == true) {
+                $.cookie("userId", data.data.username, {expires: 7, path: '/'});
                 $("#username").html(data.data.username);
             } else {
                 alert(data.errorMsg);
@@ -106,30 +177,18 @@ function userInfo() {
                 return;
             }
             switch (jqXHR.status) {
-                case 400:
-                    alert("400：错误的语法请求");
-                    break;
-                case 401:
-                    alert("401：需要进行身份验证");
-                    break;
                 case 403:
                     alert("系统拒绝：您没有访问权限。");
                     break;
                 case 404:
                     alert("您访问的资源不存在。");
-                    window.location.href = "404.html";
-                    break;
-                case 406:
-                    alert("方法禁用");
+                    // window.location.href = "404.html";
                     break;
                 case 500:
                     alert("服务器内部错误");
                     break;
                 case 503:
                     alert("服务不可用");
-                    break;
-                case 504:
-                    alert("网关超时");
                     break;
             }
         }
@@ -160,30 +219,18 @@ function contractCount(data) {
                 return;
             }
             switch (jqXHR.status) {
-                case 400:
-                    alert("400：错误的语法请求");
-                    break;
-                case 401:
-                    alert("401：需要进行身份验证");
-                    break;
                 case 403:
                     alert("系统拒绝：您没有访问权限。");
                     break;
                 case 404:
                     alert("您访问的资源不存在。");
-                    window.location.href = "404.html";
-                    break;
-                case 406:
-                    alert("方法禁用");
+                    // window.location.href = "404.html";
                     break;
                 case 500:
                     alert("服务器内部错误");
                     break;
                 case 503:
                     alert("服务不可用");
-                    break;
-                case 504:
-                    alert("网关超时");
                     break;
             }
         }
@@ -243,5 +290,48 @@ function notSignedDetails() {
                 }
             },
         ]
+    });
+}
+
+
+function loginOut() {
+    $("#loginOut").on({
+        click: function () {
+            $.ajax({
+                url: "user/loginOut",
+                type: "post",
+                data: {
+                    "function": "loginOut",
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.flag == true) {
+                        window.location.href = "login.html";
+                    } else {
+                        alert(data.errorMsg);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == "undefined") {
+                        return;
+                    }
+                    switch (jqXHR.status) {
+                        case 403:
+                            alert("系统拒绝：您没有访问权限。");
+                            break;
+                        case 404:
+                            alert("您访问的资源不存在。");
+                            // window.location.href = "404.html";
+                            break;
+                        case 500:
+                            alert("服务器内部错误");
+                            break;
+                        case 503:
+                            alert("服务不可用");
+                            break;
+                    }
+                }
+            });
+        }
     });
 }

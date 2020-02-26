@@ -165,30 +165,18 @@ function registerCheck() {
                                 return;
                             }
                             switch (jqXHR.status) {
-                                case 400:
-                                    alert("400：错误的语法请求");
-                                    break;
-                                case 401:
-                                    alert("401：需要进行身份验证");
-                                    break;
                                 case 403:
                                     alert("系统拒绝：您没有访问权限。");
                                     break;
                                 case 404:
                                     alert("您访问的资源不存在。");
-                                    window.location.href = "404.html";
-                                    break;
-                                case 406:
-                                    alert("方法禁用");
+                                    // window.location.href = "404.html";
                                     break;
                                 case 500:
                                     alert("服务器内部错误");
                                     break;
                                 case 503:
                                     alert("服务不可用");
-                                    break;
-                                case 504:
-                                    alert("网关超时");
                                     break;
                             }
                         }

@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>智能合同/签署合同</title>
+    <title>智能合同/合同详情</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
     <link rel="stylesheet" href="../public/vendor/bootstrap/css/bootstrap.min.css">
 
@@ -20,121 +20,163 @@
 </head>
 
 <body>
-    <header class="header">
-        <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
-            <ul class="mr-auto d-flex align-items-center list-unstyled mb-0">
-                <li class="nav-item mr-auto">
-                    <div class="text">
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+        <ul class="mr-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item mr-auto">
+                <div class="text">
                         <span>
                             <h6>账户地址：</h6>
                         </span>
-                        <span>
+                    <span>
                             <h6 class="text" id="accountAddress">84833488888888888888888888888888888888888888</h6>
                         </span>
-                    </div>
-                </li>
-            </ul>
-            <a href="#" class="navbar-brand font-weight-bold text-uppercase text-base">
-                <h3>智能合同</h3>
-            </a>
-            <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
-                <li class="nav-item">
-                    <button class="btn btn-primary shadow px-5" id="back">返回</button>
-                </li>
-                <li class="nav-item dropdown ml-auto">
-                    <a id="userInfo" herf="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        class="nav-link dropdown-toggle">
-                        <img src="../public/img/avatar-6.jpg" alt="Jason Doe" style="max-width: 2.5rem;"
-                             class="img-fluid rounded-circle shadow">
+                </div>
+            </li>
+        </ul>
+        <a href="#" class="navbar-brand font-weight-bold text-uppercase text-base">
+            <h3>智能合同</h3>
+        </a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <a href="index.html" class="btn btn-primary shadow px-5" id="back">返回</a>
+            </li>
+            <li class="nav-item dropdown ml-auto">
+                <a id="userInfo" herf="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   class="nav-link dropdown-toggle">
+                    <img src="../public/img/avata.jpg" alt="Jason Doe" style="max-width: 2.5rem;"
+                         class="img-fluid rounded-circle shadow">
+                </a>
+
+                <div aria-labelledby="userInfo" class="dropdown-menu">
+                    <a href="#" class="dropdown-item">
+                        <strong id="username" class="d-block text-uppercase headings-font-family">GOINHN</strong>
+                        <small>个人账号</small>
                     </a>
-
-                    <div aria-labelledby="userInfo" class="dropdown-menu">
-                        <a href="#" class="dropdown-item">
-                            <strong class="d-block text-uppercase headings-font-family">GOINHN</strong>
-                            <small>个人账号</small>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="personalData.html" class="dropdown-item">个人数据</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="login.html" class="dropdown-item">退出登录</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
+                    <div class="dropdown-divider"></div>
+                    <a href="personalData.html" class="dropdown-item">个人数据</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="login.html" id="loginOutButton" class="dropdown-item">退出登录</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
 
 
-    <div class="d-flex align-items-stretch">
+<div class="d-flex align-items-stretch">
 
-        <div class="page-holder w-100 d-flex flex-wrap">
+    <div class="page-holder w-100 d-flex flex-wrap">
 
-            <div class="container-fluid px-xl-5">
-                <section class="py-4">
-                    <div class="col-lg-12 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="mb-0 d-flex align-items-center">
-                                    <span>查看文件详情</span>
-                                </h3>
-                                <hr>
-                                <div class="form-group row">
-                                    <label class="col-md-2 form-control-label">查看文件详情</label>
-                                    <div class="col-md-10">
-                                        <textarea type="text" name="private" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-
+        <div class="container-fluid px-xl-5">
+            <section class="py-2">
+                <div class="col-lg-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="mb-0 d-flex align-items-center">
+                                <span class="col-lg-11">文件名</span>
                                 <button id="download" class="btn btn-primary shadow px-4">下载</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row align-items-center flex-row">
-                                    <div class="col-lg-8">
-                                        <h3 class="mb-0 d-flex align-items-center">
-                                            <span>文件hash</span>
-                                        </h3>
-                                        <hr>
-                                        <h4>
-                                            <span
-                                                class="text-muted text-uppercase small">11112222333344445555666677778888</span>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </section>
-            </div>
-
-
-            <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-left text-primary">
-                            <p class="mb-2 mb-md-0"></p>
-                        </div>
-                        <div class="col-md-6 text-center text-md-right text-gray-400">
-                            <p class="mb-0">Copyright &copy;Goinhn</p>
+                            </h5>
+                            <hr>
+                            <h5>
+                                <span id="contractName" class="text-muted text-uppercase small">环保合作</span>
+                            </h5>
                         </div>
                     </div>
                 </div>
-            </footer>
+
+                <div class="col-lg-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row">
+                                <div class="col-lg-8">
+                                    <h5 class="mb-0 d-flex align-items-center">
+                                        <span>文件hash</span>
+                                    </h5>
+                                    <hr>
+                                    <h5>
+                                        <span id="contractHash" class="text-muted text-uppercase small">11112222333344445555666677778888</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row">
+                                <div class="col-lg-8">
+                                    <h5 class="mb-0 d-flex align-items-center">
+                                        <span>甲方</span>
+                                    </h5>
+                                    <hr>
+                                    <h5>
+                                        <span id="partyA" class="text-muted text-uppercase small">hk3h4kj23h4k2h4k2jg4324hk</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row">
+                                <div class="col-lg-8">
+                                    <h5 class="mb-0 d-flex align-items-center">
+                                        <span>乙方</span>
+                                    </h5>
+                                    <hr>
+                                    <h5>
+                                        <span id="partyB" class="text-muted text-uppercase small">hk3h4kj23h4k2h4k2jg4324hk</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row mb-2">
+                                <div class="col-lg-12">
+                                    <h5>
+                                        <span class="text-muted text-uppercase small">私钥签名：</span>
+                                    </h5>
+                                </div>
+                                <textarea id="privateKey" type="text" rows="8" placeholder="签名"
+                                          class="form-control shadow border-0"></textarea>
+                            </div>
+                            <button id="signButton" class="btn btn-primary shadow px-4">签署</button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
         </div>
+
+
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-right text-gray-400">
+                        <p class="mb-0">Copyright &copy;Goinhn</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+</div>
 
 
-    <script src="../public/vendor/jquery/jquery.min.js"></script>
-    <script src="../public/vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="../public/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../public/vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="../public/vendor/chart.js/Chart.min.js"></script>
+<script src="../dist/contractSignDist.js"></script>
 </body>
 
 </html>

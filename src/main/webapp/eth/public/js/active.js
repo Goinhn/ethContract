@@ -5,6 +5,8 @@ $(function () {
     activeNow();
 });
 
+
+//获取url中的属性值
 function getUrlParam(name) {
     let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     let r = window.location.search.substr(1).match(reg);
@@ -13,6 +15,8 @@ function getUrlParam(name) {
     return null;
 }
 
+
+//激活账户
 function activeNow() {
     let code = getUrlParam("code");
     $.ajax({
@@ -36,30 +40,18 @@ function activeNow() {
                 return;
             }
             switch (jqXHR.status) {
-                case 400:
-                    $("#tip").val("400：错误的语法请求");
-                    break;
-                case 401:
-                    $("#tip").val("401：需要进行身份验证");
-                    break;
                 case 403:
-                    $("#tip").val("系统拒绝：您没有访问权限。");
+                    alert("系统拒绝：您没有访问权限。");
                     break;
                 case 404:
                     alert("您访问的资源不存在。");
-                    window.location.href = "404.html";
-                    break;
-                case 406:
-                    $("#tip").val("方法禁用");
+                    // window.location.href = "404.html";
                     break;
                 case 500:
-                    $("#tip").val("服务器内部错误");
+                    alert("服务器内部错误");
                     break;
                 case 503:
-                    $("#tip").val("服务不可用");
-                    break;
-                case 504:
-                    $("#tip").val("网关超时");
+                    alert("服务不可用");
                     break;
             }
         }

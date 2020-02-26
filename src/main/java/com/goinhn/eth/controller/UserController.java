@@ -2,6 +2,7 @@ package com.goinhn.eth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goinhn.eth.domain.Contract;
 import com.goinhn.eth.domain.ResultInfo;
 import com.goinhn.eth.domain.User;
 import com.goinhn.eth.service.UserService;
@@ -27,6 +28,11 @@ public class UserController {
     private UserService userService;
 
 
+    /**
+     * 用户信息注册
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@RequestBody Map<String, Object> params) {
         String function = params.get("function").toString();
@@ -61,6 +67,11 @@ public class UserController {
     }
 
 
+    /**
+     * 用户账号激活
+     * @param params
+     * @return
+     */
     @RequestMapping(value = "/active", method = RequestMethod.POST)
     public String active(@RequestBody Map<String, Object> params) {
         String function = params.get("function").toString();
@@ -79,6 +90,12 @@ public class UserController {
     }
 
 
+    /**
+     * 用户账号登录
+     * @param params
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody Map<String, Object> params, ModelMap model) {
         String function = params.get("function").toString();
@@ -113,6 +130,104 @@ public class UserController {
 
         return writeValueAsString(resultInfo);
     }
+
+
+    /**
+     * 返回合同的详细信息
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/contractDetails", method = RequestMethod.POST)
+    public String contractDetails(@RequestBody Map<String, Object> params) {
+        String function = params.get("function").toString();
+        String contractId = params.get("contractId").toString();
+        System.out.println(function);
+        System.out.println(contractId);
+
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            Contract contract = userService.contractDetails(Integer.parseInt(contractId));
+            if (contract != null) {
+                resultInfo.setFlag(true);
+            } else {
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("合约不存在");
+            }
+            return writeValueAsString(resultInfo);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("合约不存在");
+            return writeValueAsString(resultInfo);
+        }
+    }
+
+
+    /**
+     * 检查用户是否添加了签名
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/checkSign", method = RequestMethod.POST)
+    public String checkSign(@RequestBody Map<String, Object> params) {
+        String function = params.get("function").toString();
+        String contractId = params.get("contractId").toString();
+        System.out.println(function);
+        System.out.println(contractId);
+
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            String publicKey = userService.findPublicKey(Integer.parseInt(contractId));
+            if (publicKey != null) {
+                resultInfo.setFlag(true);
+            } else {
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("用户不存在");
+            }
+            return writeValueAsString(resultInfo);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("合约不存在");
+            return writeValueAsString(resultInfo);
+        }
+    }
+
+
+    /**
+     * 用户添加签名
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/userSigned", method = RequestMethod.POST)
+    public String userSigned(@RequestBody Map<String, Object> params) {
+        String function = params.get("function").toString();
+        String contractId = params.get("contractId").toString();
+        String contractAddress = params.get("contractAddress").toString();
+        System.out.println(function);
+        System.out.println(contractId);
+
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            Contract contract = new Contract();
+            contract.setContractId(Integer.parseInt(contractId));
+            contract.setContractAddress(contractAddress);
+
+            if (userService.userSigned(contract)) {
+                resultInfo.setFlag(true);
+            } else {
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("用户不存在");
+            }
+            return writeValueAsString(resultInfo);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("合约不存在");
+            return writeValueAsString(resultInfo);
+        }
+    }
+
 
     private String writeValueAsString(ResultInfo resultInfo) {
         String json = "";

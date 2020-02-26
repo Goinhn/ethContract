@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 合同数据层
+ */
 @Repository
 public interface ContractDao {
 
@@ -43,9 +46,14 @@ public interface ContractDao {
     List<Contract> findByUserIdAndContractType(Contract contract);
 
 
+    @Select("select * from tab_contract where userId = #{userId} and contractHash = #{contractHash}")
+    @ResultMap("contractMap")
+    Contract findByUserIdAndContractHash(Contract contract);
+
+
     @Select("select * from tab_contract where contractHash = #{contractHash}")
     @ResultMap("contractMap")
-    Contract findByContractHash(String contractHash);
+    List<Contract> findByContractHash(String contractHash);
 
 
     @Select("select * from tab_contract where contractName like #{contractName}")
@@ -61,13 +69,11 @@ public interface ContractDao {
     @Insert("insert into tab_contract (userId, contractHash, contractName, contractType, contractAddress, partyA, partyB)" +
             "values(#{userId}, #contractHash}, #{contractName}, #{contractType}, #{contractAddress}, #{partyA}, #{partyB}")
     @SelectKey(keyColumn = "contractId", keyProperty = "contractId", resultType = Integer.class, before = false, statement = {"select last_insert_id()"})
-    int saveForceContract(Contract contract);
+    int saveContract(Contract contract);
 
 
-    @Insert("insert into tab_contract (userId, contractHash, contractName, contractType)" +
-            "values(#{userId}, #contractHash}, #{contractName}, #{contractType}")
-    @SelectKey(keyColumn = "contractId", keyProperty = "contractId", resultType = Integer.class, before = false, statement = {"select last_insert_id()"})
-    int saveNoSignedContract(Contract contract);
+    @Update("update tab_contract set contractType = #{contractType}, contractAddress = #{contractAddress}")
+    int updateContractTypeAndContractAddress(Contract contract);
 
 
     @Update("update tab_contract set contractType = #{contractType}, contractAddress = #{contractAddress}, partyA = #{partyA}, partyB = #{partyB}")

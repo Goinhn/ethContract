@@ -5,8 +5,10 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
+/**
+ * 用户数据层
+ */
 @Repository
 public interface UserDao {
 
@@ -28,6 +30,11 @@ public interface UserDao {
     @Select("select * from tab_user where userId = #{userId}")
     @ResultMap("userMap")
     User findByUserId(Integer userId);
+
+
+    @Select("select * from tab_user where userId = #{userId} and accountAddress = #{accountAddress}")
+    @ResultMap("userMap")
+    User findByUserIdAndAccountAddress(User user);
 
 
     @Select("select * from tab_user where username = #{username}")

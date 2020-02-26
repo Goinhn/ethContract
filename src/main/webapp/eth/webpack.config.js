@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, 'app.js'),
         index: path.resolve(__dirname, 'public/js/index.js'),
         contractDetails: path.resolve(__dirname, 'public/js/contractDetails.js'),
         contractSign: path.resolve(__dirname, 'public/js/contractSign.js'),

@@ -22,7 +22,12 @@ public class IndexController {
     @Autowired
     private ContractService contractService;
 
-
+    /**
+     * 获取用户的信息
+     * @param params
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
     public String userInfo(@RequestBody Map<String, Object> params, ModelMap model) {
         String function = params.get("function").toString();
@@ -53,6 +58,48 @@ public class IndexController {
     }
 
 
+    /**
+     * 保存用户当前的钱包地址
+     * @param params
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/userSaveAccountAddress", method = RequestMethod.POST)
+    public String userSaveAccountAddress(@RequestBody Map<String, Object> params, ModelMap model) {
+        String function = params.get("function").toString();
+        String accountAddress = params.get("accountAddress").toString();
+        System.out.println("function: " + function);
+
+        ResultInfo resultInfo = new ResultInfo();
+        try {
+            User user = new User();
+            int userId = Integer.parseInt(model.get("userId").toString().trim());
+            user.setUserId(userId);
+            user.setAccountAddress(accountAddress);
+
+            if (contractService.userSaveAccountAddress(user)) {
+                resultInfo.setFlag(true);
+
+            } else {
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("更新签名失败！");
+            }
+            return writeValueAsString(resultInfo);
+        } catch (NullPointerException | NumberFormatException e) {
+            e.printStackTrace();
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("该账号不存在");
+            return writeValueAsString(resultInfo);
+        }
+    }
+
+
+    /**
+     * 查询用户当前的合约数量并返回
+     * @param params
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/contractCount", method = RequestMethod.POST)
     public String contractCount(@RequestBody Map<String, Object> params, ModelMap model) {
         String function = params.get("function").toString();
@@ -80,6 +127,12 @@ public class IndexController {
     }
 
 
+    /**
+     * 请求已经其签署的合约信息并返回
+     * @param params
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/forceContract", method = RequestMethod.POST)
     public String forceContract(@RequestBody Map<String, Object> params, ModelMap model) {
         String function = params.get("function").toString();
@@ -107,6 +160,12 @@ public class IndexController {
     }
 
 
+    /**
+     * 请求未签署的合约信息返回
+     * @param params
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/notSignedContract", method = RequestMethod.POST)
     public String notSignedContract(@RequestBody Map<String, Object> params, ModelMap model) {
         String function = params.get("function").toString();
